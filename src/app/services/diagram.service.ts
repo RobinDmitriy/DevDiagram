@@ -1,4 +1,5 @@
 import {Injectable} from '@angular/core';
+import {BehaviorSubject} from "rxjs";
 
 export class FlowNode {
   id?: number;
@@ -129,6 +130,9 @@ const flowEdges: FlowEdge[] = [
 })
 export class DiagramService {
 
+  public currentDataDiagram: BehaviorSubject<string> = new BehaviorSubject('');
+  public savedDataDiagram: BehaviorSubject<string> = new BehaviorSubject('');
+
   constructor() {
   }
 
@@ -138,5 +142,29 @@ export class DiagramService {
 
   getFlowEdges() {
     return flowEdges;
+  }
+
+  setDataDiagram(data: string) {
+    console.log('data = ', data);
+    this.currentDataDiagram.next(data);
+    if (data === '') {
+      this.savedDataDiagram.next(data);
+    }
+  }
+
+  onSaveDiagram() {
+    console.log('onSaveDiagram this.currentDataDiagram.value = ', this.currentDataDiagram.value);
+    if (this.currentDataDiagram.value !== '') {
+      localStorage.setItem('diagram', this.currentDataDiagram.value);
+      // this.savedDataDiagram.next(this.currentDataDiagram.value);
+      console.log('Диаграмма сохранена!');
+    }
+  }
+
+  onLoadDiagram() {
+    const data = localStorage.getItem('diagram');
+    if (!!data) {
+      this.savedDataDiagram.next(data);
+    }
   }
 }

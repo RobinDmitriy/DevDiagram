@@ -6,6 +6,8 @@ import {MyDiagramComponent} from './my-diagram/my-diagram.component';
 import {DxDiagramModule} from "devextreme-angular";
 import {DiagramService} from "./services/diagram.service";
 import {HttpClientModule} from "@angular/common/http";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatButtonModule} from "@angular/material/button";
 
 @NgModule({
   declarations: [
@@ -15,7 +17,9 @@ import {HttpClientModule} from "@angular/common/http";
   imports: [
     BrowserModule,
     HttpClientModule,
-    DxDiagramModule
+    DxDiagramModule,
+    BrowserAnimationsModule,
+    MatButtonModule
   ],
   providers: [DiagramService],
   bootstrap: [AppComponent]
